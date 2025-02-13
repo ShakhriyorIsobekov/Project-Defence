@@ -50,7 +50,11 @@ function Home() {
               Here you can easily create forms for your business, studies and
               e.t.c
             </Typography>
-            <Button href="/auth" variant="contained" sx={{ mt: 3, mb: 3 }}>
+            <Button
+              href="/auth/login"
+              variant="contained"
+              sx={{ mt: 3, mb: 3 }}
+            >
               Start
             </Button>
           </Box>

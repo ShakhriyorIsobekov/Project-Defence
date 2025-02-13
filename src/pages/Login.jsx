@@ -1,5 +1,14 @@
+//toast
+import { toast } from "react-hot-toast";
 // mui
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 // react hook form
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +24,6 @@ function Login() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
@@ -24,11 +32,26 @@ function Login() {
   const onSubmit = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch(
+        "https://project-defence-backend-jkxejtcui-shakhriyors-projects-9715e1dc.vercel.app/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const result = await response.json();
+      console.log("Login successful", result);
+      alert("Login successful ✅");
       console.log(data);
     } catch (err) {
-      setError("email", {
-        message: "Error",
-      });
+      console.log("Error", err);
     }
   };
 
@@ -81,7 +104,7 @@ function Login() {
             </Typography>
             <TextField
               required
-              id="outlined-required"
+              id="outlined-required-first"
               label="Email"
               {...register("email")}
             />
@@ -95,7 +118,7 @@ function Login() {
             )}
             <TextField
               required
-              id="outlined-required"
+              id="outlined-required-second"
               label="Password"
               {...register("password")}
               sx={{ mt: 6 }}
@@ -118,6 +141,48 @@ function Login() {
             </Button>
           </Box>
         </Container>
+        <Box
+          component={"div"}
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "center", sm: "space-between" },
+            alignItems: "center",
+            mt: 5,
+            flexDirection: { xs: "column", sm: "row" },
+            rowGap: "20px",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "1rem",
+                sm: "1rem",
+                lg: "1.125rem",
+                xl: "1.2rem",
+              },
+            }}
+            variant="h4"
+          >
+            Do not have an account?{" "}
+            <Link sx={{ fontWeight: "bold" }} href="register">
+              Create Account
+            </Link>
+          </Typography>
+          <Link
+            sx={{
+              fontSize: {
+                xs: "1rem",
+                sm: "1rem",
+                lg: "1.125rem",
+                xl: "1.2rem",
+              },
+              fontWeight: "bold",
+            }}
+            href="/forget"
+          >
+            Forgot Password?
+          </Link>
+        </Box>
       </Box>
     </section>
   );

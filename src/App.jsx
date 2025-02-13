@@ -25,7 +25,7 @@ function App() {
       element: <AuthLayout />,
       children: [
         {
-          index: true,
+          path: "login",
           element: <Login />,
         },
         {
