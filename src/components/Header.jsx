@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { Container } from "@mui/material";
+import { Container, Link } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -138,10 +138,20 @@ export default function Header() {
             <Typography
               variant="h6"
               noWrap
-              component="div"
+              component="h1"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              LOGO
+              <Link
+                sx={{
+                  color: "#000",
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  textDecoration: "none",
+                }}
+                href="/"
+              >
+                LOGO
+              </Link>
             </Typography>
             <Search>
               <SearchIconWrapper>
