@@ -36,7 +36,7 @@ function Register() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       // sending data to backend
       const response = await fetch(
-        "https://project-defence-backend-jkxejtcui-shakhriyors-projects-9715e1dc.vercel.app/register",
+        "https://vumxpbp6rd.execute-api.eu-north-1.amazonaws.com/register",
         {
           method: "POST",
           headers: {
@@ -47,11 +47,13 @@ function Register() {
       );
 
       if (!response.ok) {
-        throw new Error("Registration Failed");
+        console.log(`Email exists! ❌`);
+        alert(`Email already exists! ❌`);
+        throw new Error("Login failed");
       }
 
       const result = await response.json();
-      toast.success("Registeration successful 🎉");
+      alert("Registeration successful 🎉");
       console.log("Registration successful", result);
     } catch (err) {
       console.log("ERROR", err);
@@ -114,6 +116,7 @@ function Register() {
               required
               id="outlined-required-second"
               label="Email"
+              type="email"
               {...register("email")}
             />
             {errors.email && (
@@ -130,6 +133,7 @@ function Register() {
               </Typography>
             )}
             <TextField
+              type="password"
               required
               id="outlined-required-third"
               label="Password"

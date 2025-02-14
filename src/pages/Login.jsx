@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // zod
 import { z } from "zod";
+// navigate
 
 const schema = z.object({
   email: z.string().email(),
@@ -33,7 +34,7 @@ function Login() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const response = await fetch(
-        "https://project-defence-backend-jkxejtcui-shakhriyors-projects-9715e1dc.vercel.app/login",
+        "https://vumxpbp6rd.execute-api.eu-north-1.amazonaws.com/login",
         {
           method: "POST",
           headers: {
@@ -43,7 +44,10 @@ function Login() {
         }
       );
       if (!response.ok) {
-        throw new Error("Login failed");
+        console.log("Email or Password is incorrect! ❌");
+        alert("Email or Password is incorrect! ❌");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
 
       const result = await response.json();
@@ -107,6 +111,7 @@ function Login() {
               id="outlined-required-first"
               label="Email"
               {...register("email")}
+              type="email"
             />
             {errors.email && (
               <Typography
@@ -117,6 +122,7 @@ function Login() {
               </Typography>
             )}
             <TextField
+              type="password"
               required
               id="outlined-required-second"
               label="Password"
