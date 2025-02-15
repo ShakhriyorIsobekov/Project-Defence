@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 //toast
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const schema = z.object({
   username: z.string(),
@@ -25,11 +26,12 @@ function Register() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
   });
+  // errors messages
+  const [formError, setFormError] = useState(null);
 
   const onSubmit = async (data) => {
     try {
@@ -47,13 +49,14 @@ function Register() {
       );
 
       if (!response.ok) {
-        console.log(`Email exists! ❌`);
-        alert(`Email already exists! ❌`);
+        console.log(`Email or Username exists! ❌`);
+        toast.error("Something went wrong... ❌");
+        setFormError("Email or Username already exists ❌");
         throw new Error("Login failed");
       }
 
       const result = await response.json();
-      alert("Registeration successful 🎉");
+      toast.success("Registration successful 🎉");
       console.log("Registration successful", result);
     } catch (err) {
       console.log("ERROR", err);
@@ -106,6 +109,19 @@ function Register() {
             >
               Register in order to continue...
             </Typography>
+            {formError && (
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "red",
+                  fontSize: "1.125rem",
+                  textAlign: "center",
+                  mb: 3,
+                }}
+              >
+                {formError}
+              </Typography>
+            )}
             <TextField
               id="outlined-required-first"
               label="Username"

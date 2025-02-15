@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // zod
 import { z } from "zod";
+import { useState } from "react";
 // navigate
 
 const schema = z.object({
@@ -30,6 +31,9 @@ function Login() {
     resolver: zodResolver(schema),
   });
 
+  // error messages
+  const [formError, setFormError] = useState(null);
+
   const onSubmit = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -45,14 +49,15 @@ function Login() {
       );
       if (!response.ok) {
         console.log("Email or Password is incorrect! ❌");
-        alert("Email or Password is incorrect! ❌");
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        toast.error("Something went wrong... ❌");
+        setFormError("Email or Password is incorrect! ❌");
+        throw new Error("Login failed");
       }
 
       const result = await response.json();
       console.log("Login successful", result);
-      alert("Login successful ✅");
+      toast.success("Login successful ✅");
+      setFormError(null);
       console.log(data);
     } catch (err) {
       console.log("Error", err);
@@ -106,6 +111,19 @@ function Login() {
             >
               Login in order to continue...
             </Typography>
+            {formError && (
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "red",
+                  fontSize: "1.125rem",
+                  textAlign: "center",
+                  mb: 3,
+                }}
+              >
+                {formError}
+              </Typography>
+            )}
             <TextField
               required
               id="outlined-required-first"
