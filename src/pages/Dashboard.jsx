@@ -24,6 +24,8 @@ function Dashboard() {
             p: 4,
             display: "flex",
             justifyContent: "space-evenly",
+            flexWrap: "wrap",
+            rowGap: 3,
           }}
         >
           <Card sx={{ maxWidth: 300, minHeight: 300 }}>
