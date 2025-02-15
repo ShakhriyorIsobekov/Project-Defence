@@ -14,7 +14,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 //toast
 import toast from "react-hot-toast";
+// react
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   username: z.string(),
@@ -23,6 +25,8 @@ const schema = z.object({
 });
 
 function Register() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -58,6 +62,7 @@ function Register() {
       const result = await response.json();
       toast.success("Registration successful 🎉");
       console.log("Registration successful", result);
+      navigate("/dashboard");
     } catch (err) {
       console.log("ERROR", err);
     }
@@ -124,8 +129,8 @@ function Register() {
             )}
             <TextField
               id="outlined-required-first"
-              label="Username"
-              sx={{ mb: 6 }}
+              label="Fullname"
+              sx={{ mb: 6, backgroundColor: "#ebebeb", borderRadius: "10px" }}
               {...register("username")}
             />
             <TextField
@@ -134,6 +139,7 @@ function Register() {
               label="Email"
               type="email"
               {...register("email")}
+              sx={{ backgroundColor: "#ebebeb", borderRadius: "10px" }}
             />
             {errors.email && (
               <Typography
@@ -154,7 +160,7 @@ function Register() {
               id="outlined-required-third"
               label="Password"
               {...register("password")}
-              sx={{ mt: 6 }}
+              sx={{ mt: 6, backgroundColor: "#ebebeb", borderRadius: "10px" }}
             />
             {errors.password && (
               <Typography

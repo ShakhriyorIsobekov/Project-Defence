@@ -14,8 +14,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // zod
 import { z } from "zod";
+// react
 import { useState } from "react";
-// navigate
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   email: z.string().email(),
@@ -23,6 +24,8 @@ const schema = z.object({
 });
 
 function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -59,6 +62,7 @@ function Login() {
       toast.success("Login successful ✅");
       setFormError(null);
       console.log(data);
+      navigate("/dashboard");
     } catch (err) {
       console.log("Error", err);
     }
@@ -128,6 +132,7 @@ function Login() {
               required
               id="outlined-required-first"
               label="Email"
+              sx={{ backgroundColor: "#ebebeb", borderRadius: "10px" }}
               {...register("email")}
               type="email"
             />
@@ -145,7 +150,7 @@ function Login() {
               id="outlined-required-second"
               label="Password"
               {...register("password")}
-              sx={{ mt: 6 }}
+              sx={{ mt: 6, backgroundColor: "#ebebeb", borderRadius: "10px" }}
             />
             {errors.password && (
               <Typography

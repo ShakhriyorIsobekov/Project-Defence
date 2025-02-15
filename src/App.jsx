@@ -7,6 +7,8 @@ import AuthLayout from "./layouts/AuthLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import DashboardLayout from "./layouts/DashboardLayout";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const routes = createBrowserRouter([
@@ -31,6 +33,16 @@ function App() {
         {
           path: "register",
           element: <Register />,
+        },
+      ],
+    },
+    {
+      path: "/dashboard",
+      element: <DashboardLayout />,
+      children: [
+        {
+          index: true,
+          element: <Dashboard />,
         },
       ],
     },
