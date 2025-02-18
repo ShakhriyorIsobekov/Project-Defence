@@ -1,5 +1,9 @@
 // rrd
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 // layouts
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
@@ -11,6 +15,8 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
+  const isAuthenticated = document.cookie.includes("token");
+
   const routes = createBrowserRouter([
     {
       path: "/",
