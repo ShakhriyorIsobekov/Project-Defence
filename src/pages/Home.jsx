@@ -1,6 +1,7 @@
 import { Box, Button, Container, Link, Typography } from "@mui/material";
 
 function Home() {
+  const isLoggedIn = !!localStorage.getItem("token");
   return (
     <section className="home">
       <Box component={"div"}>
@@ -51,7 +52,7 @@ function Home() {
               e.t.c
             </Typography>
             <Button
-              href="/auth/login"
+              href={isLoggedIn ? "/dashboard" : "/auth/login"}
               variant="contained"
               sx={{ mt: 3, mb: 3 }}
             >

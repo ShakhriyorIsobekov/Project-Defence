@@ -1,5 +1,9 @@
 // rrd
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 // layouts
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
@@ -11,7 +15,6 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 // components
 import PrivateRoute from "./components/PrivateRoute";
-
 function App() {
   const routes = createBrowserRouter([
     {
