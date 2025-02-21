@@ -57,6 +57,9 @@ function Home() {
             >
               Start
             </Button>
+            <Button variant="outlined" href="/readmode">
+              Read Mode
+            </Button>
           </Box>
           <Box className="home__right" component={"div"}>
             <img

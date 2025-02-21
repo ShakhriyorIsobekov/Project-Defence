@@ -17,6 +17,7 @@ import { z } from "zod";
 // react
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../components/useAuth";
 
 const schema = z.object({
   email: z.string().email(),
@@ -25,6 +26,7 @@ const schema = z.object({
 
 function Login() {
   const navigate = useNavigate();
+  const { setAuthToken } = useAuth();
 
   const {
     register,
@@ -48,24 +50,27 @@ function Login() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-          credentials: "include",
+          // credentials: "include",
         }
       );
-      if (!response.ok) {
+      if (response.ok) {
+        const result = await response.json();
+        setAuthToken(result.token);
+        console.log(result);
+        console.log("Login successful", result);
+        toast.success("Login successful ✅");
+        setFormError(null);
+        navigate("/dashboard");
+      } else {
         console.log("Email or Password is incorrect! ❌");
         toast.error("Something went wrong... ❌");
         setFormError("Email or Password is incorrect! ❌");
         throw new Error("Login failed");
       }
-
-      const result = await response.json();
-      console.log("Login successful", result);
-      toast.success("Login successful ✅");
-      setFormError(null);
-      console.log(data);
-      navigate("/dashboard");
     } catch (err) {
       console.log("Error", err.message);
+      toast.error("An error occurred during login");
+      setFormError("An unexpected error occurred");
     }
   };
 
@@ -219,3 +224,10 @@ function Login() {
 }
 
 export default Login;
+
+// if (!response.ok) {
+//   console.log("Email or Password is incorrect! ❌");
+//   toast.error("Something went wrong... ❌");
+//   setFormError("Email or Password is incorrect! ❌");
+//   throw new Error("Login failed");
+// }

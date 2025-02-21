@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 // react
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../components/useAuth";
 
 const schema = z.object({
   username: z.string(),
@@ -26,6 +27,7 @@ const schema = z.object({
 
 function Register() {
   const navigate = useNavigate();
+  const { setAuthToken } = useAuth();
 
   const {
     register,
@@ -49,23 +51,25 @@ function Register() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-          credentials: "include",
         }
       );
 
-      if (!response.ok) {
-        console.log(`Email or Username exists! ❌`);
-        toast.error("Something went wrong... ❌");
-        setFormError("Email or Username already exists ❌");
-        throw new Error("Login failed");
+      if (response.ok) {
+        const result = await response.json();
+        setAuthToken(result.token);
+        console.log("Registration successful", result);
+        toast.success("Registration successful 🎉");
+        navigate("/dashboard");
+      } else {
+        const error = await response.json();
+        console.log("Registration failed:", error.message);
+        toast.error(error.message || "Something went wrong... ❌");
+        setFormError(error.message || "Email is already taken! ❌");
       }
-
-      const result = await response.json();
-      toast.success("Registration successful 🎉");
-      console.log("Registration successful", result);
-      navigate("/dashboard");
     } catch (err) {
-      console.log("ERROR", err);
+      console.error("ERROR", err);
+      toast.error("An error occurred during registration");
+      setFormError("An unexpected error occurred");
     }
   };
   return (

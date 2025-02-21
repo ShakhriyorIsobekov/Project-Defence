@@ -1,22 +1,18 @@
 // rrd
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // layouts
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
 // pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
+// components
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  const isAuthenticated = document.cookie.includes("token");
-
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -44,7 +40,11 @@ function App() {
     },
     {
       path: "/dashboard",
-      element: <DashboardLayout />,
+      element: (
+        <PrivateRoute>
+          <DashboardLayout />
+        </PrivateRoute>
+      ),
       children: [
         {
           index: true,

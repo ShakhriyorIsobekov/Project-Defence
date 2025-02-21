@@ -70,7 +70,7 @@ function Dashboard() {
                     textTransform: "capitalize",
                   }}
                 >
-                  Try
+                  New Template
                 </Button>
               </Box>
             </CardContent>
@@ -103,9 +103,6 @@ function Dashboard() {
               <IconButton aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
               <Button
                 href="/template:id"
                 variant="outlined"
@@ -116,7 +113,7 @@ function Dashboard() {
                   textTransform: "capitalize",
                 }}
               >
-                Try
+                Correct
               </Button>
             </CardActions>
           </Card>
@@ -148,9 +145,6 @@ function Dashboard() {
               <IconButton aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
               <Button
                 href="/template:id"
                 variant="outlined"
@@ -161,7 +155,7 @@ function Dashboard() {
                   textTransform: "capitalize",
                 }}
               >
-                Try
+                Correct
               </Button>
             </CardActions>
           </Card>
