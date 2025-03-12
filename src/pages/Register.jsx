@@ -68,8 +68,8 @@ function Register() {
       }
     } catch (err) {
       console.error("ERROR", err);
-      toast.error("An error occurred during registration");
-      setFormError("An unexpected error occurred");
+      toast.error(err.message || "Something went wrong... ❌");
+      setFormError("Email is already taken! ❌");
     }
   };
   return (

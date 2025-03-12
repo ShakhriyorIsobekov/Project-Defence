@@ -63,14 +63,14 @@ function Login() {
         navigate("/dashboard");
       } else {
         console.log("Email or Password is incorrect! ❌");
-        toast.error("Something went wrong... ❌");
+        // toast.error("Something went wrong... ❌");
         setFormError("Email or Password is incorrect! ❌");
         throw new Error("Login failed");
       }
     } catch (err) {
       console.log("Error", err.message);
-      toast.error("An error occurred during login");
-      setFormError("An unexpected error occurred");
+      // toast.error("Something went wrong... ❌");
+      setFormError("Email or Password is incorrect! ❌");
     }
   };
 
